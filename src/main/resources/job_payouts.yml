@@ -141,14 +141,14 @@ sections:
     display_name: ' &r  '
     lore:
       - ""
-special:
-  display_name: "&a{item}"
-  lore:
-    - "&2ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ"
-    - "   &7ᴘᴀʏᴏᴜᴛ ꜰᴏʀ &f{item}&7 ɪɴ &f{job}"
-    - ""
-    -  "    &8• &7ᴀᴄᴛɪᴏɴ : &f{action}"
-    - "    &8• &7ɪɴᴄᴏᴍᴇ: &f{income} &6&l+{income_boost}"
-    - "    &8• &7ᴘᴏɪɴᴛꜱ: &f{points} &6&l+{points_boost}"
-    - "    &8• &7ᴇxᴘᴇʀɪᴇɴᴄᴇ: &f{exp} &6&l+{exp_boost}"
-    - - ""
+  special:
+    display_name: "&a{item}"
+    lore:
+      - "&2ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ"
+      - "   &7ᴘᴀʏᴏᴜᴛ ꜰᴏʀ &f{item}&7 ɪɴ &f{job}"
+      - ""
+      -  "    &8• &7ᴀᴄᴛɪᴏɴ : &f{action}"
+      - "    &8• &7ɪɴᴄᴏᴍᴇ: &f{income} &6&l+{income_boost}"
+      - "    &8• &7ᴘᴏɪɴᴛꜱ: &f{points} &6&l+{points_boost}"
+      - "    &8• &7ᴇxᴘᴇʀɪᴇɴᴄᴇ: &f{exp} &6&l+{exp_boost}"
+      - - ""

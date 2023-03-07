@@ -30,27 +30,11 @@ public class JobItemInfo {
     public void setGUI() {
         inventory = new PaginatedGui(6, 10, baseGui.formatText(player, baseGui.getTitle(), null), InteractionModifier.VALUES);
     }
-    public void addGuiItem(List<String> args, Player player, Player target) {
+    public void addSpecialItem(List<String> args, Player player) {
         if (args.size() < baseGui.getCommandArguments().size()) return;
         String jobName = args.get(1);
         Job job = Jobs.getJob(jobName);
         if (job == null) return;
-        baseGui.getBaseSections().forEach(section -> {
-            if (section.sectionName.equals("item")) return;
-            List<Integer> slot = section.slots;
-            List<String> lore = section.lore;
-            String displayName = section.displayName;
-            String material = section.material;
-            ItemBuilder itemBuilder = new ItemBuilder(section.material);
-            lore = baseGui.formatJobsText(job, null, lore, player);
-            displayName = baseGui.formatJobsText(job, null, displayName, player);
-            itemBuilder.setDisplayName(displayName);
-            itemBuilder.setLore(lore);
-            itemBuilder.hideAttributes(ItemFlag.HIDE_ATTRIBUTES);
-            ItemData itemData = new ItemData(material, 0, 0, displayName, lore, slot, itemBuilder, section);
-            addItems(player, target, args, itemData);
-        });
-
         for (ActionType type : ActionType.values()) {
             job.getJobInfo(type).forEach(jobInfo -> {
                 String itemName = baseGui.getString("special.display_name");

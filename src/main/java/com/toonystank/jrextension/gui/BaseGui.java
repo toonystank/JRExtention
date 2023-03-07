@@ -1,5 +1,6 @@
 package com.toonystank.jrextension.gui;
 
+import com.gamingmesh.jobs.Jobs;
 import com.gamingmesh.jobs.container.CurrencyType;
 import com.gamingmesh.jobs.container.Job;
 import com.gamingmesh.jobs.container.JobInfo;
@@ -7,12 +8,15 @@ import com.toonystank.jrextension.JRExtension;
 import com.toonystank.jrextension.sections.BaseCommandSection;
 import com.toonystank.jrextension.sections.BaseSection;
 import com.toonystank.jrextension.sections.HeadSection;
+import com.toonystank.jrextension.utils.ItemBuilder;
+import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.ItemFlag;
 
 import java.io.IOException;
 import java.util.*;
@@ -40,7 +44,29 @@ public class BaseGui extends HeadSection {
             playerGUIs.put(event.getPlayer(), playerGUI);
         }
         playerGUI.setGUI();
-        playerGUI.addGuiItem(args,event.getPlayer(),event.getPlayer());
+        addGuiItem(args, event.getPlayer(), event.getPlayer());
+    }
+    public void addGuiItem(List<String> args, Player player, Player target) {
+        if (args.size() < this.getCommandArguments().size()) return;
+        String jobName = args.get(1);
+        Job job = Jobs.getJob(jobName);
+        if (job == null) return;
+        this.getBaseSections().forEach(section -> {
+            if (section.sectionName.equals("item")) return;
+            List<Integer> slot = section.slots;
+            List<String> lore = section.lore;
+            String displayName = section.displayName;
+            String material = section.material;
+            ItemBuilder itemBuilder = new ItemBuilder(section.material);
+            lore = this.formatJobsText(job, null, lore, player);
+            displayName = this.formatJobsText(job, null, displayName, player);
+            itemBuilder.setDisplayName(displayName);
+            itemBuilder.setLore(lore);
+            itemBuilder.hideAttributes(ItemFlag.HIDE_ATTRIBUTES);
+            ItemData itemData = new ItemData(material, 0, 0, displayName, lore, slot, itemBuilder, section);
+            playerGUIs.get(player).addItems(player, target, args, itemData);
+        });
+        playerGUIs.get(player).addSpecialItem(args,player);
     }
     public String formatJobsText(Job job, JobInfo jobInfo, String text, Player player) {
         if (text == null) return text;
