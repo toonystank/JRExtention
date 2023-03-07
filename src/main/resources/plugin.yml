@@ -1,0 +1,11 @@
+name: JRExtension
+version: '${project.version}'
+main: com.toonystank.jrextension.JRExtension
+api-version: 1.13
+commands:
+  "jobstitle":
+    description: "Change your job title"
+    usage: "/jobstitle <title>"
+  "jrextensionreload":
+    description: "Reload the plugin"
+    usage: "/jrextensionreload"

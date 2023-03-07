@@ -1,0 +1,18 @@
+services:
+  translate_to_tiny_text: true
+  title:
+    levelup:
+      enabled: true
+      title: "&&7⇧ &6&lʟᴇᴠᴇʟ ᴜᴘ &7⇧"
+      subtitle: "%jobname% &6%level%"
+    leave:
+      enabled: true
+      title: "%jobname%"
+      subtitle: "● &a&lᴊᴏɪɴᴇᴅ ᴊᴏʙ &r●"
+    join:
+      enabled: true
+      title: "%jobname%"
+      subtitle: "● &a&lᴊᴏɪɴᴇᴅ ᴊᴏʙ &r●"
+  gui:
+   - "job_payouts.yml"
+

@@ -1,0 +1,154 @@
+head:
+  title: "&7(&2ᴘʟᴀʏᴇʀꜱ&7)"
+  open_commands:
+    - jobinfo
+  command_arguments:
+    - job
+  item_remap:
+    PLAYER: "PLAYER_HEAD"
+    Woodcutter: "PLAYER_HEAD"
+    HUSK: "ROTTEN_FLESH"
+    SQUID: "INK_SAC"
+    SILVERFISH: "COBBLESTONE"
+    GIANT: "NETHER_STAR"
+    COW: "MILK_BUCKET"
+    CHICKEN: "EGG"
+    SHEEP: "WHITE_WOOL"
+    PIG: "PORKCHOP"
+    RABBIT: "RABBIT_FOOT"
+    HORSE: "LEATHER"
+    MUSHROOM_COW: "RED_MUSHROOM"
+    OCELOT: "COD"
+    WOLF: "BONE"
+    VILLAGER: "EMERALD"
+    IRON_GOLEM: "IRON_INGOT"
+    SNOWMAN: "SNOWBALL"
+    ENDERMAN: "ENDER_PEARL"
+    ENDER_DRAGON: "DRAGON_EGG"
+    BLAZE: "BLAZE_ROD"
+    MAGMA_CUBE: "MAGMA_CREAM"
+    GHAST: "GUNPOWDER"
+    WITCH: "SUGAR"
+    PIG_ZOMBIE: "GOLD_NUGGET"
+    CREEPER: "TNT"
+    SKELETON: "BOW"
+    SPIDER: "STRING"
+    CAVE_SPIDER: "SPIDER_EYE"
+    ZOMBIE: "ROTTEN_FLESH"
+    SLIME: "SLIME_BALL"
+    BAT: "FEATHER"
+    WITHER: "WITHER_SKELETON_SKULL"
+    GUARDIAN: "PRISMARINE_SHARD"
+    ELDER_GUARDIAN: "PRISMARINE_CRYSTALS"
+    SHULKER: "PURPLE_SHULKER_BOX"
+    ENDERMITE: "ENDER_PEARL"
+    VINDICATOR: "EMERALD"
+    EVOKER: "EMERALD"
+    ILLUSIONER: "EMERALD"
+    RAVAGER: "ROTTEN_FLESH"
+    PHANTOM: "FEATHER"
+    DOLPHIN: "PRISMARINE_SHARD"
+    TURTLE: "SEA_LANTERN"
+    COD: "COD"
+    SALMON: "SALMON"
+    TROPICAL_FISH: "TROPICAL_FISH"
+    DROWNED: "ROTTEN_FLESH"
+    PANDA: "BAMBOO"
+    PILLAGER: "EMERALD"
+    WANDERING_TRADER: "EMERALD"
+    FOX: "TROPICAL_FISH"
+    BEE: "HONEYCOMB"
+    HOGLIN: "ROTTEN_FLESH"
+    STRIDER: "MAGMA_CREAM"
+    ZOGLIN: "ROTTEN_FLESH"
+    CAT: "TROPICAL_FISH"
+    PUFFERFISH: "TROPICAL_FISH"
+    TRADER_LLAMA: "EMERALD"
+    LLAMA: "LEATHER"
+    PARROT: "FEATHER"
+    DONKEY: "LEATHER"
+    MULE: "LEATHER"
+    SKELETON_HORSE: "BONE"
+    ZOMBIE_HORSE: "ROTTEN_FLESH"
+    RED: "RED_WOOL"
+    ORANGE: "ORANGE_WOOL"
+    YELLOW: "YELLOW_WOOL"
+    GREEN: "GREEN_WOOL"
+    LIGHT_BLUE: "LIGHT_BLUE_WOOL"
+    BLUE: "BLUE_WOOL"
+    PURPLE: "PURPLE_WOOL"
+    PINK: "PINK_WOOL"
+    BLACK: "BLACK_WOOL"
+    GRAY: "GRAY_WOOL"
+    WHITE: "WHITE_WOOL"
+    BROWN: "BROWN_WOOL"
+    CYAN: "CYAN_WOOL"
+    LIME: "LIME_WOOL"
+    MAGENTA: "MAGENTA_WOOL"
+    LIGHT_GRAY: "LIGHT_GRAY_WOOL"
+sections:
+  go_back:
+    material: OAK_DOOR
+    display_name: "&7⟰ &aɢᴏ ʙᴀᴄᴋ"
+    lore:
+      - ""
+    left_click_commands:
+      - "[sound] BLOCK_WOODEN_DOOR_OPEN"
+      - "[player] deluxemenus:claim"
+    slots:
+      - 45
+  Previous:
+    material: ARROW
+    display_name: "&cPrevious Page"
+    lore:
+      - ""
+    slots:
+      - 47
+  Next:
+    material: ARROW
+    display_name: "&aNext Page"
+    lore:
+      - "&7Go to page two"
+    slots:
+      - 51
+  background:
+    material: BLACK_STAINED_GLASS_PANE
+    slots:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 18
+      - 27
+      - 26
+      - 46
+      - 48
+      - 49
+      - 50
+      - 52
+      - 53
+      - 44
+      - 35
+      - 36
+      - 26
+      - 17
+    display_name: ' &r  '
+    lore:
+      - ""
+special:
+  display_name: "&a{item}"
+  lore:
+    - "&2ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ"
+    - "   &7ᴘᴀʏᴏᴜᴛ ꜰᴏʀ &f{item}&7 ɪɴ &f{job}"
+    - ""
+    -  "    &8• &7ᴀᴄᴛɪᴏɴ : &f{action}"
+    - "    &8• &7ɪɴᴄᴏᴍᴇ: &f{income} &6&l+{income_boost}"
+    - "    &8• &7ᴘᴏɪɴᴛꜱ: &f{points} &6&l+{points_boost}"
+    - "    &8• &7ᴇxᴘᴇʀɪᴇɴᴄᴇ: &f{exp} &6&l+{exp_boost}"
+    - - ""
