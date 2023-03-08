@@ -11,6 +11,7 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -20,7 +21,7 @@ public class JobItemInfo {
     private final JRExtension plugin;
     private final BaseGui baseGui;
     private final Player player;
-    private PaginatedGui inventory;
+    public PaginatedGui inventory;
 
     public JobItemInfo(JRExtension plugin, BaseGui baseGui, Player player) {
         this.plugin = plugin;
@@ -42,7 +43,6 @@ public class JobItemInfo {
                 List<String> itemLore = baseGui.getStringList("special.lore");
                 itemLore = baseGui.formatJobsText(job, jobInfo, itemLore, player);
                 AtomicReference<String> material = new AtomicReference<>(jobInfo.getName());
-                plugin.getLogger().info("Job Info Name: " + jobInfo.getName());
                 if (Material.getMaterial(material.get()) == null) {
                     baseGui.getRemappedItems().forEach((key, value) -> {
                         String jobInfoName = jobInfo.getName();
@@ -54,7 +54,6 @@ public class JobItemInfo {
                         }
                     });
                 }
-                plugin.getLogger().info("Material: " + material);
                 GuiItem itemBuilder = new ItemBuilder(material.get()).setLore(itemLore).setDisplayName(itemName).hideAttributes(ItemFlag.HIDE_ATTRIBUTES).getAsGuiItem();
                 itemBuilder.setAction(event -> event.setCancelled(true));
                 inventory.addItem(true, itemBuilder);
@@ -63,23 +62,4 @@ public class JobItemInfo {
         inventory.update();
         inventory.open(player);
     }
-    public void addItems(Player operator, Player target, List<String> args,ItemData itemData) {
-        GuiItem guiItem = itemData.getItemBuilder().getAsGuiItem();
-        itemData.getSlots().forEach(slot -> {
-            guiItem.setAction(event -> {
-                event.setCancelled(true);
-                if (itemData.getBaseSection().sectionName.equals("Previous")) {
-                    inventory.previous();
-                    return;
-                } else if (itemData.getBaseSection().sectionName.equals("Next")) {
-                    inventory.next();
-                    return;
-                }
-                this.baseGui.processCommand(operator, target, itemData.getBaseSection(), args, inventory);
-            });
-            inventory.setItem(slot, guiItem);
-        });
-    }
-
-
 }

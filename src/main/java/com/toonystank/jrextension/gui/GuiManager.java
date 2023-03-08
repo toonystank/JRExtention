@@ -1,7 +1,6 @@
 package com.toonystank.jrextension.gui;
 
 import com.toonystank.jrextension.JRExtension;
-import com.toonystank.jrextension.utils.ConfigManager;
 import com.toonystank.jrextension.utils.MainConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +30,6 @@ public class GuiManager implements Listener {
             try {
                 guiMap.put(fileName, new BaseGui(plugin, fileName));
                 baseGuis.add(guiMap.get(fileName));
-                plugin.getLogger().info("Loaded gui: " + fileName);
             } catch (Exception e) {
                 e.printStackTrace();
             }

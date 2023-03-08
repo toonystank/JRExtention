@@ -1,0 +1,6 @@
+level_rewards:
+  "1":
+    lore:
+      - "{job} 2x boost"
+    commands:
+      - "jobs boost {job} 2"

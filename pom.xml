@@ -38,6 +38,12 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.yaml.snakeyaml</pattern>
+                                    <shadedPattern>com.toonystank.jrextension.utils.config.yaml</shadedPattern> <!-- Replace [YOUR_PLUGIN_PACKAGE] with your namespace -->
+                                </relocation>
+                            </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
@@ -116,6 +122,13 @@
             <groupId>dev.triumphteam</groupId>
             <artifactId>triumph-gui</artifactId>
             <version>3.1.4</version> <!-- replace version here -->
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.33</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

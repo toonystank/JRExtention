@@ -1,50 +1,44 @@
-package com.toonystank.jrextension.utils;
+package com.toonystank.jrextension.utils.config;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import java.io.*;
+
+import com.toonystank.jrextension.utils.config.file.FileConfiguration;
+import com.toonystank.jrextension.utils.config.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@SuppressWarnings("unused")
 public class ConfigManager {
 
     private File file;
+    private final Logger logger;
     private FileConfiguration config;
     private final Plugin plugin;
     private final boolean isInFolder;
     private String configVersion;
     private boolean consoleLogger = true;
-    private final Logger logger;
 
+    /**
+     * Initializes the Config.
+     *
+     * @param plugin   Instance of the plugin you want to initialize the config for
+     * @param fileName String
+     * @param force    boolean enable/disable force file update
+     * @param copy     boolean either copy the file from the plugin or not
+     */
     public ConfigManager(Plugin plugin, String fileName, boolean force, boolean copy) throws IOException {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
         process(plugin,fileName,force,copy);
         isInFolder = false;
-    }
-    public ConfigManager(Plugin plugin, String pathWithFile) throws IOException {
-        this.plugin = plugin;
-        this.logger = plugin.getLogger();
-        process(plugin,pathWithFile);
-        isInFolder = false;
-    }
-    private void process(Plugin plugin, String pathWithFile) throws IOException {
-        String path = plugin.getDataFolder() + File.separator + pathWithFile;
-        plugin.getLogger().info("Path: " + path);
-        this.file = new File(plugin.getDataFolder() + File.separator + pathWithFile);
-        if (!file.exists()) {
-            if (file.createNewFile()) {
-                if (consoleLogger) logger.info("Created new file: " + file.getName());
-            }
-        }
-        this.config = YamlConfiguration.loadConfiguration(this.file);
     }
     private void process(Plugin plugin, String fileName, boolean force, boolean copy) throws IOException {
         this.file = new File(plugin.getDataFolder(), fileName);
@@ -101,7 +95,7 @@ public class ConfigManager {
     /**
      * Set logger of config load events. by default it's enabled
      * @param consoleLogger boolean
-     * @return ConfigManager
+     * @return Manager
      */
     public ConfigManager setConsoleLogger(boolean consoleLogger) {
         this.consoleLogger = consoleLogger;
@@ -110,7 +104,7 @@ public class ConfigManager {
     /**
      * Set the version of the config. useful for updating the config.
      * @param configVersion Version of the config
-     * @return ConfigManager
+     * @return Manager
      */
     public ConfigManager setConfigVersion(String configVersion) {
         this.configVersion = configVersion;
@@ -161,7 +155,7 @@ public class ConfigManager {
      */
     public void copy( boolean force) {
         if (!file.exists()) {
-            plugin.saveResource(file.getName(), force);
+            this.saveResource(file.getName(), force);
         }
     }
     /**
@@ -170,7 +164,7 @@ public class ConfigManager {
      * @param path String path to save the resource
      */
     public void copy( boolean force, String path) {
-        plugin.saveResource(path, force);
+        this.saveResource(path, force);
     }
 
     /**
@@ -182,14 +176,14 @@ public class ConfigManager {
         try {
             version = this.getString(versionPath);
         }catch (NullPointerException e) {
-            plugin.getLogger().info("No version found in config.yml... Creating new version of the config");
+            logger.info("No version found in config.yml... Creating new version of the config");
         }
         if (version == null || !version.equals(this.configVersion)) {
             File newFile = new File(file.getParentFile(), "old_" + version + "_" + getFile().getName());
             File oldFile = getFile();
             if (oldFile.renameTo(newFile)) {
                 this.file = new File(plugin.getDataFolder(), getFile().getName());
-                plugin.saveResource(getFile().getName(), true);
+                this.saveResource(getFile().getName(), true);
                 this.config = YamlConfiguration.loadConfiguration(this.file);
             }
         }
@@ -296,4 +290,64 @@ public class ConfigManager {
         return config.getString(path);
     }
 
+    public void saveResource(String resourcePath, boolean replace) {
+        if (resourcePath == null || resourcePath.equals("")) {
+            throw new IllegalArgumentException("ResourcePath cannot be null or empty");
+        }
+
+        resourcePath = resourcePath.replace('\\', '/');
+        InputStream in = getResource(resourcePath);
+        if (in == null) {
+            throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + file);
+        }
+
+        File outFile = new File(plugin.getDataFolder(), resourcePath);
+        int lastIndex = resourcePath.lastIndexOf('/');
+        File outDir = new File(plugin.getDataFolder(), resourcePath.substring(0, Math.max(lastIndex, 0)));
+
+        if (!outDir.exists()) {
+            if (outDir.mkdirs()) {
+                logger.log(Level.INFO, "Created directory " + outDir);
+            } else {
+                logger.log(Level.WARNING, "Could not create directory " + outDir);
+            }
+        }
+
+        try {
+            if (!outFile.exists() || replace) {
+                OutputStream out = Files.newOutputStream(outFile.toPath());
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                out.close();
+                in.close();
+            } else {
+                logger.log(Level.WARNING, "Could not save " + outFile.getName() + " to " + outFile + " because " + outFile.getName() + " already exists.");
+            }
+        } catch (IOException ex) {
+            logger.log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile, ex);
+        }
+    }
+
+    public InputStream getResource(String filename) {
+        if (filename == null) {
+            throw new IllegalArgumentException("Filename cannot be null");
+        }
+
+        try {
+            URL url = this.getClass().getClassLoader().getResource(filename);
+
+            if (url == null) {
+                return null;
+            }
+
+            URLConnection connection = url.openConnection();
+            connection.setUseCaches(false);
+            return connection.getInputStream();
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 }

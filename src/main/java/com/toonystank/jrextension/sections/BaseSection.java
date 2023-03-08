@@ -1,7 +1,7 @@
 package com.toonystank.jrextension.sections;
 
 import com.toonystank.jrextension.JRExtension;
-import com.toonystank.jrextension.utils.ConfigManager;
+import com.toonystank.jrextension.utils.config.ConfigManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

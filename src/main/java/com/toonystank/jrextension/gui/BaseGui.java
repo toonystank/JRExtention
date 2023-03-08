@@ -17,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemFlag;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
@@ -52,7 +53,7 @@ public class BaseGui extends HeadSection {
         Job job = Jobs.getJob(jobName);
         if (job == null) return;
         this.getBaseSections().forEach(section -> {
-            if (section.sectionName.equals("item")) return;
+            if (section.sectionName.equals("special")) return;
             List<Integer> slot = section.slots;
             List<String> lore = section.lore;
             String displayName = section.displayName;
@@ -64,7 +65,7 @@ public class BaseGui extends HeadSection {
             itemBuilder.setLore(lore);
             itemBuilder.hideAttributes(ItemFlag.HIDE_ATTRIBUTES);
             ItemData itemData = new ItemData(material, 0, 0, displayName, lore, slot, itemBuilder, section);
-            playerGUIs.get(player).addItems(player, target, args, itemData);
+            addItems(player, target, args, itemData, playerGUIs.get(player).inventory);
         });
         playerGUIs.get(player).addSpecialItem(args,player);
     }
@@ -84,9 +85,7 @@ public class BaseGui extends HeadSection {
         text = PlaceholderAPI.setPlaceholders(player, text);
         text = ChatColor.translateAlternateColorCodes('&', text);
         if (plugin.getMainConfig().isTranslate_to_tiny_text()) {
-            plugin.getLogger().info("before transelate " + text);
             text = translate(text);
-            plugin.getLogger().info("after transelate "+ text);
         }
         if (text.contains("_")) text = text.replace("_", " ");
         return text;
@@ -171,6 +170,23 @@ public class BaseGui extends HeadSection {
         } else {
             return c;
         }
+    }
+    public void addItems(Player operator, Player target, List<String> args, @NotNull ItemData itemData, PaginatedGui inventory) {
+        GuiItem guiItem = itemData.getItemBuilder().getAsGuiItem();
+        itemData.getSlots().forEach(slot -> {
+            guiItem.setAction(event -> {
+                event.setCancelled(true);
+                if (itemData.getBaseSection().sectionName.equals("Previous")) {
+                    inventory.previous();
+                    return;
+                } else if (itemData.getBaseSection().sectionName.equals("Next")) {
+                    inventory.next();
+                    return;
+                }
+                this.processCommand(operator, target, itemData.getBaseSection(), args, inventory);
+            });
+            inventory.setItem(slot, guiItem);
+        });
     }
 
 }

@@ -1,7 +1,7 @@
 package com.toonystank.jrextension.sections;
 
 import com.toonystank.jrextension.JRExtension;
-import com.toonystank.jrextension.utils.ConfigManager;
+import com.toonystank.jrextension.utils.config.ConfigManager;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
-public class HeadSection extends ConfigManager{
+public class HeadSection extends ConfigManager {
 
     private final JRExtension plugin;
     private String title;
@@ -25,10 +25,10 @@ public class HeadSection extends ConfigManager{
     }
 
     public void loadConfig() {
-        this.title = this.getConfig().getString("head.title");
-        this.openCommands = this.getConfig().getStringList("head.open_commands");
-        this.commandArguments = this.getConfig().getStringList("head.command_arguments");
-        getConfig()
+        this.title = this.getString("head.title");
+        this.openCommands = this.getStringList("head.open_commands");
+        this.commandArguments = this.getStringList("head.command_arguments");
+        this.getConfig()
                 .getConfigurationSection("head.item_remap")
                 .getKeys(false)
                 .forEach(key -> remappedItems.put(key, getConfig().getString("head.item_remap." + key)));

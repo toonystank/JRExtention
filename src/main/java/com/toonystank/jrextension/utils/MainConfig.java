@@ -1,6 +1,7 @@
 package com.toonystank.jrextension.utils;
 
 import com.toonystank.jrextension.JRExtension;
+import com.toonystank.jrextension.utils.config.ConfigManager;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class MainConfig extends ConfigManager{
+public class MainConfig extends ConfigManager {
 
     private final JRExtension plugin;
 
