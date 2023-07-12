@@ -121,7 +121,7 @@
         <dependency>
             <groupId>dev.triumphteam</groupId>
             <artifactId>triumph-gui</artifactId>
-            <version>3.1.4</version> <!-- replace version here -->
+            <version>3.1.5</version> <!-- replace version here -->
             <scope>compile</scope>
         </dependency>
         <dependency>
